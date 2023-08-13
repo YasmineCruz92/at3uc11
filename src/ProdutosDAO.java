@@ -70,6 +70,23 @@ public class ProdutosDAO {
         return null;
     }
 }
+public boolean venderProduto(int id) {
+    try {
+        conn = new conectaDAO().connectDB();
+        
+        String query = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+        
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setInt(1, id);
+        
+        int rowsAffected = preparedStmt.executeUpdate();
+        
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+        System.out.println("Deu erro " + e.getMessage());
+        return false;
+    }
+}
 
    
    
