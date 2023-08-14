@@ -70,6 +70,37 @@ public class ProdutosDAO {
         return null;
     }
 }
+
+   
+   
+
+public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+    String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+    
+    try {
+        conn = new conectaDAO().connectDB();
+
+        PreparedStatement st = conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        
+        List<ProdutosDTO> listaProdutos = new ArrayList<>();
+        
+        while (rs.next()) {
+            ProdutosDTO produto = new ProdutosDTO();
+            produto.setId(rs.getInt("id"));
+            produto.setNome(rs.getString("nome"));
+            produto.setValor(rs.getInt("valor"));
+            produto.setStatus(rs.getString("status"));
+            listaProdutos.add(produto);
+        }
+        
+        return (ArrayList<ProdutosDTO>) listaProdutos;
+    } catch (SQLException ex) {
+        System.out.println("Erro ao conectar: " + ex.getMessage());
+        return null;
+    }
+}
+
 public boolean venderProduto(int id) {
     try {
         conn = new conectaDAO().connectDB();
@@ -87,11 +118,9 @@ public boolean venderProduto(int id) {
         return false;
     }
 }
-
-   
-   
 }
-    
-    
-        
 
+
+    
+     
+  
